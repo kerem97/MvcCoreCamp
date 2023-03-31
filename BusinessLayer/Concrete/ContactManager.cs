@@ -30,7 +30,7 @@ namespace BusinessLayer.Concrete
 
         public List<Contact> TGetList()
         {
-            return _contactDal.GetList();
+            return _contactDal.GetListAll();
         }
 
         public void TInsert(Contact t)

@@ -24,7 +24,7 @@ namespace DataAccessLayer.Repository
             return c.Set<T>().Find(id);
         }
 
-        public List<T> GetList()
+        public List<T> GetListAll()
         {
             using var c = new Context();
             return c.Set<T>().ToList();
@@ -37,7 +37,7 @@ namespace DataAccessLayer.Repository
             c.SaveChanges();
         }
 
-        public List<T> GetList(Expression<Func<T, bool>> filter)
+        public List<T> GetListAll(Expression<Func<T, bool>> filter)
         {
             using var c = new Context();
             return c.Set<T>().Where(filter).ToList();

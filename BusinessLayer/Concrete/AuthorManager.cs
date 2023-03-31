@@ -30,7 +30,7 @@ namespace BusinessLayer.Concrete
 
         public List<Author> TGetList()
         {
-            return _authorDal.GetList();
+            return _authorDal.GetListAll();
         }
 
         public void TInsert(Author t)

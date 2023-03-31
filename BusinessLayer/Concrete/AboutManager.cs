@@ -31,7 +31,7 @@ namespace BusinessLayer.Concrete
 
         public List<About> TGetList()
         {
-            return _aboutDal.GetList();
+            return _aboutDal.GetListAll();
         }
 
         public void TInsert(About t)

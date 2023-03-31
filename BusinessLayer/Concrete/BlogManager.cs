@@ -35,12 +35,12 @@ namespace BusinessLayer.Concrete
 
         public List<Blog> TGetList()
         {
-            return _blogDal.GetList();
+            return _blogDal.GetListAll();
         }
 
         public List<Blog> TGetBlogByID(int id)
         {
-            return _blogDal.GetList(x => x.BlogID == id);
+            return _blogDal.GetListAll(x => x.BlogID == id);
         }
         public void TInsert(Blog t)
         {

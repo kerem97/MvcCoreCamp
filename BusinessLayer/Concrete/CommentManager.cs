@@ -28,9 +28,14 @@ namespace BusinessLayer.Concrete
             return _commentDal.GetByID(id);
         }
 
+        public List<Comment> TGetList(int id)
+        {
+            return _commentDal.GetListAll(x => x.BlogID == id);
+        }
+
         public List<Comment> TGetList()
         {
-            return _commentDal.GetList();
+            return _commentDal.GetListAll();
         }
 
         public void TInsert(Comment t)

@@ -30,7 +30,7 @@ namespace BusinessLayer.Concrete
 
         public List<Category> TGetList()
         {
-            return _categoryDal.GetList();
+            return _categoryDal.GetListAll();
         }
 
         public void TInsert(Category t)
