@@ -19,9 +19,9 @@ namespace MvcCoreCamp.Controllers
             return View(values);
         }
         [HttpGet]
-        public IActionResult BlogDetails(int id)
+        public IActionResult BlogReadAll(int id)
         {
-            var values = bm.TGetByID(id);
+            var values = bm.TGetBlogByID(id);
             return View(values);
         }
 
