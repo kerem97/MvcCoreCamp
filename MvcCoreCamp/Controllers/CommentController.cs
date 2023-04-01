@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
+using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,20 @@ namespace MvcCoreCamp.Controllers
             var values = cm.TGetList(id);
             return PartialView(values);
         }
+        [HttpGet]
         public PartialViewResult PartialAddcomment()
         {
+
+            return PartialView();
+        }
+
+        [HttpPost]
+        public PartialViewResult PartialAddcomment(Comment c)
+        {
+            c.CommentDate = DateTime.Parse(DateTime.Now.ToShortDateString());
+            c.Status = true;
+            c.BlogID = 2;
+            cm.TInsert(c);
             return PartialView();
         }
     }

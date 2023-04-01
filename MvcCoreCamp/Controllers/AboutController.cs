@@ -1,5 +1,4 @@
-﻿
-using BusinessLayer.Concrete;
+﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,22 +10,18 @@ using System.Threading.Tasks;
 namespace MvcCoreCamp.Controllers
 {
     [AllowAnonymous]
-    public class BlogController : Controller
+    public class AboutController : Controller
     {
-        BlogManager bm = new BlogManager(new EfBlogDal());
-
+        AboutManager abm = new AboutManager(new EfAboutDal());
         public IActionResult Index()
         {
-            var values = bm.GetBlogByCategory();
+            var values = abm.TGetList();
             return View(values);
         }
-
-        public IActionResult BlogReadAll(int id)
+        public PartialViewResult SocialMediaAbout()
         {
-            ViewBag.i = id;
-            var values = bm.TGetBlogByID(id);
-            return View(values);
-        }
 
+            return PartialView();
+        }
     }
 }
