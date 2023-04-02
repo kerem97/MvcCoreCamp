@@ -28,5 +28,11 @@ namespace MvcCoreCamp.Controllers
             return View(values);
         }
 
+        public IActionResult BlogListByAuthor()
+        {
+            var values = bm.GetBlogListByAuthor(1);
+            return View(values);
+        }
+
     }
 }
