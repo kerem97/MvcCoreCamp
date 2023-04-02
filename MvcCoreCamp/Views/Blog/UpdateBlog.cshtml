@@ -1,0 +1,28 @@
+﻿@model EntityLayer.Concrete.Blog
+
+
+@{
+    ViewData["Title"] = "UpdateBlog";
+    Layout = "~/Views/Shared/_AuthorLayout.cshtml";
+}
+
+@using (Html.BeginForm("UpdateBlog", "Blog", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.BlogID)
+    @Html.Label("Blog Başlığı")
+    @Html.TextBoxFor(x => x.BlogTitle, new { @class = "form-control" })
+    <br />
+    @Html.Label("Blog Thumbnail")
+    @Html.TextBoxFor(x => x.BlogThumbnailImage, new { @class = "form-control" })
+    <br />
+    @Html.Label("Blog Görseli")
+    @Html.TextBoxFor(x => x.BlogImage, new { @class = "form-control" })
+    <br />
+    @Html.Label("Blog Kategorisi")
+    @Html.TextBoxFor(x => x.CategoryID, new { @class = "form-control" })
+    <br />
+    @Html.Label("Blog İçeriği")
+    @Html.TextAreaFor(x => x.BlogContent, 10, 3, new { @class = "form-control" })
+    <br />
+    <button class="btn btn-outline-primary">Kaydet</button>
+}
