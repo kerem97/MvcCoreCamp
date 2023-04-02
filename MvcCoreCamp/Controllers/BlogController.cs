@@ -89,13 +89,29 @@ namespace MvcCoreCamp.Controllers
         public IActionResult UpdateBlog(int id)
         {
             var values = bm.TGetByID(id);
+            CategoryManager cm = new CategoryManager(new EfCategoryDal());
+            List<SelectListItem> categoryvalues = (from x in cm.TGetList()
+                                                   select new SelectListItem
+                                                   {
+                                                       Text = x.CategoryName,
+                                                       Value = x.CategoryID.ToString()
+
+                                                   }).ToList();
+
+
+
+
+            ViewBag.cv = categoryvalues;
             return View(values);
         }
 
         [HttpPost]
         public IActionResult UpdateBlog(Blog p)
         {
-            
+            p.AuthorID = 1;
+            p.Status = true;
+            p.Date = DateTime.Parse(DateTime.Now.ToShortDateString());
+            bm.TUpdate(p);
             return RedirectToAction("BlogListByAuthor");
         }
     }
