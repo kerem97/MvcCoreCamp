@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <Folder Include="Views\Category\" />
+    <Folder Include="wwwroot\AuthorImageFiles\" />
   </ItemGroup>
 
 </Project>

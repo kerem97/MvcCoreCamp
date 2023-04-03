@@ -13,6 +13,10 @@ namespace BusinessLayer.Concrete
     {
         private readonly ICategoryDal _categoryDal;
 
+        public CategoryManager()
+        {
+        }
+
         public CategoryManager(ICategoryDal categoryDal)
         {
             _categoryDal = categoryDal;

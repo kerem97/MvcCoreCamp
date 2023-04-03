@@ -12,9 +12,11 @@ namespace EntityLayer.Concrete
         public string UserName { get; set; }
         public string Content { get; set; }
         public string Title { get; set; }
+        public int BlogRate { get; set; }
         public DateTime CommentDate { get; set; }
         public bool Status { get; set; }
         public int BlogID { get; set; }
         public Blog Blog { get; set; }
+
     }
 }

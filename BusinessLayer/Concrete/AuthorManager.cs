@@ -18,6 +18,11 @@ namespace BusinessLayer.Concrete
             _authorDal = authorDal;
         }
 
+        public List<Author> GetAuthorById(int id)
+        {
+            return _authorDal.GetListAll(x => x.AuthorID == id);
+        }
+
         public void TDelete(Author t)
         {
             _authorDal.Delete(t);
