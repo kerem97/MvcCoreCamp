@@ -15,6 +15,21 @@ namespace DataAccessLayer.Concrete
             optionsBuilder.UseSqlServer("server=DESKTOP-1MSR6CD\\SQLEXPRESS;database=MvcNewCoreBlogDb;integrated security=true;");
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Message2>()
+                .HasOne(x => x.SenderUser)
+                .WithMany(y => y.AuthorSender)
+                .HasForeignKey(z => z.SenderID)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<Message2>()
+               .HasOne(x => x.ReceiverUser)
+               .WithMany(y => y.AuthorReceiver)
+               .HasForeignKey(z => z.ReceiverID)
+               .OnDelete(DeleteBehavior.ClientSetNull);
+        }
+
         public DbSet<About> Abouts { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Blog> Blogs { get; set; }
@@ -25,6 +40,7 @@ namespace DataAccessLayer.Concrete
         public DbSet<BlogRate> BlogRates { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Message2> Message2s { get; set; }
 
     }
 }
