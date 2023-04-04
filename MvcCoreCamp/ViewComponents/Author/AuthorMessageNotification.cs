@@ -10,10 +10,14 @@ namespace MvcCoreCamp.ViewComponents.Author
 {
     public class AuthorMessageNotification : ViewComponent
     {
-        AuthorManager atm = new AuthorManager(new EfAuthorDal());
+        MessageManager mm = new MessageManager(new EfMessageDal());
         public IViewComponentResult Invoke()
         {
-            return View();
+            string p = "murat@gmail.com";
+            var values = mm.GetInboxListByAuthor(p);
+
+          
+            return View(values);
         }
     }
 }
