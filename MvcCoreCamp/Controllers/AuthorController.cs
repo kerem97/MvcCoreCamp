@@ -1,6 +1,7 @@
 ﻿
 using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
@@ -15,13 +16,19 @@ using System.Threading.Tasks;
 
 namespace MvcCoreCamp.Controllers
 {
-    [AllowAnonymous]
+    [Authorize]
     public class AuthorController : Controller
     {
-        AuthorManager atm = new AuthorManager(new EfAuthorDal());
+        Context c = new Context();
 
+        AuthorManager atm = new AuthorManager(new EfAuthorDal());
         public IActionResult Index()
         {
+            var usermail = User.Identity.Name;
+            ViewBag.v = usermail;
+
+            var authorname = c.Authors.Where(x => x.Mail == usermail).Select(y => y.AuthorName).FirstOrDefault();
+            ViewBag.v2 = authorname;
             return View();
         }
 
@@ -37,8 +44,10 @@ namespace MvcCoreCamp.Controllers
         [HttpGet]
         public IActionResult UpdateAuthorProfile()
         {
-            var authorvalues = atm.TGetByID(1);
-            return View(authorvalues);
+            var usermail = User.Identity.Name;
+            var authorID = c.Authors.Where(x => x.Mail == usermail).Select(y => y.AuthorID).FirstOrDefault();
+            var values = atm.TGetByID(authorID);
+            return View(values);
         }
         [HttpPost]
         public IActionResult UpdateAuthorProfile(Author p)

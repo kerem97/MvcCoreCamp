@@ -1,6 +1,7 @@
 ﻿
 using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
@@ -14,17 +15,18 @@ using System.Threading.Tasks;
 
 namespace MvcCoreCamp.Controllers
 {
-    [AllowAnonymous]
+
     public class BlogController : Controller
     {
-        BlogManager bm = new BlogManager(new EfBlogDal());
-
+        BlogManager bm = new BlogManager(new EfBlogDal());      
+        Context c = new Context();
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var values = bm.GetBlogByCategory();
             return View(values);
         }
-
+        [AllowAnonymous]
         public IActionResult BlogReadAll(int id)
         {
             ViewBag.i = id;
@@ -34,7 +36,10 @@ namespace MvcCoreCamp.Controllers
 
         public IActionResult BlogListByAuthor()
         {
-            var values = bm.TGetListCategoryByAuthor(1);
+           
+            var usermail = User.Identity.Name;
+            var authorID = c.Authors.Where(x => x.Mail == usermail).Select(y => y.AuthorID).FirstOrDefault();            
+            var values = bm.TGetListCategoryByAuthor(authorID);
             return View(values);
         }
 
@@ -56,13 +61,16 @@ namespace MvcCoreCamp.Controllers
         [HttpPost]
         public IActionResult AddBlog(Blog p)
         {
+           
+            var usermail = User.Identity.Name;
+            var authorID = c.Authors.Where(x => x.Mail == usermail).Select(y => y.AuthorID).FirstOrDefault();
             BlogValidator bv = new BlogValidator();
             ValidationResult results = bv.Validate(p);
             if (results.IsValid)
             {
                 p.Status = true;
                 p.Date = DateTime.Parse(DateTime.Now.ToShortDateString());
-                p.AuthorID = 1;
+                p.AuthorID = authorID;
                 bm.TInsert(p);
                 return RedirectToAction("BlogListByAuthor", "Blog");
             }
@@ -108,7 +116,9 @@ namespace MvcCoreCamp.Controllers
         [HttpPost]
         public IActionResult UpdateBlog(Blog p)
         {
-            p.AuthorID = 1;
+            var usermail = User.Identity.Name;
+            var authorID = c.Authors.Where(x => x.Mail == usermail).Select(y => y.AuthorID).FirstOrDefault();
+            p.AuthorID = authorID;
             p.Status = true;
             p.Date = DateTime.Parse(DateTime.Now.ToShortDateString());
             bm.TUpdate(p);

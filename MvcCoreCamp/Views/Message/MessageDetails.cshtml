@@ -1,0 +1,17 @@
+﻿@model EntityLayer.Concrete.Message2
+
+@{
+    ViewData["Title"] = "MessageDetails";
+    Layout = "~/Views/Shared/_AuthorLayout.cshtml";
+}
+
+<h1>Mesaj Detayları</h1>
+<br />
+@Html.HiddenFor(x => x.MessageID)
+@Html.Label("Konu")
+@Html.LabelFor(x => x.Subject, new { @class = "form-control" })
+<br />
+@Html.Label("Mesaj")
+@Html.TextAreaFor(x => x.Content, 10, 3, new { @class = "form-control" })
+<br />
+<button class="btn btn-outline-primary">Gelen Kutusuna Dön</button>
