@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewData["Title"] = "BLogListExcel";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>BLogListExcel</h1>
+<br />
+@*<button class="btn btn-outline-success" onclick="DownloadExcelBlogList">Excel Listesi İndir</button>
+<script>
+    function DownloadExcelBlogList() {
+        wind.open("/Admin/Blog/ExportStaticExcelBlogList");
+    }
+</script>*@
+<a href="/Admin/Blog/ExportStaticExcelBlogList" class="btn btn-outline-success">Excel Listesi İndir </a>
