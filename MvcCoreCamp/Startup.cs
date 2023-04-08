@@ -1,3 +1,5 @@
+using DataAccessLayer.Concrete;
+using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -7,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MvcCoreCamp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +29,13 @@ namespace MvcCoreCamp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<Context>();
+            services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<Context>().AddErrorDescriber<CustomIdentityValidator>(); ;
+
+
+
+
+
             services.AddControllersWithViews();
 
             services.AddMvc(config =>
@@ -88,7 +98,7 @@ namespace MvcCoreCamp
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-             
+
             });
 
 

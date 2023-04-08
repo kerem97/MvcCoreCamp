@@ -1,5 +1,4 @@
-﻿@model EntityLayer.Concrete.Author
-
+﻿@model LoginViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_DefaultLayout.cshtml";
@@ -13,12 +12,12 @@
                 <form method="post">
                     <div class="form-group">
                         <label for="exampleInputEmail1 mb-2">Mail adresi</label>
-                        <input type="email" class="form-control" name="Mail" aria-describedby="emailHelp" placeholder="" required="">
+                        <input type="text" class="form-control" asp-for="Username">
                         <small id="emailHelp" class="form-text text-muted">Bilgileriniz üçüncü kişilerle paylaşılmayacaktır.</small>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1 mb-2">Şifre</label>
-                        <input type="password" class="form-control" name="Password" placeholder="" required="">
+                        <input type="password" class="form-control" asp-for="Password">
                     </div>
                     <div class="form-check mb-2">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
