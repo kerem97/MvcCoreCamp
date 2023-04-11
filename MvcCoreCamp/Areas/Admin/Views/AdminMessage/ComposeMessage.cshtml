@@ -1,4 +1,5 @@
-﻿
+﻿@model EntityLayer.Concrete.Message2
+
 @{
     ViewData["Title"] = "ComposeMessage";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -66,7 +67,7 @@
                 </div>
                 <div class="mail-box">
                     <div class="mail-body">
-                        <form method="get">
+                        <form method="post">
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Alıcı:</label>
 
@@ -79,25 +80,17 @@
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Mesajınız:</label>
                                 <textarea class="form-control" values="" rows="4" cols="10"></textarea>
-
-
-
                             </div>
-
+                            <button class="btn btn-outline-info">Gönder</button>
                         </form>
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <div class="mail-body text-right tooltip-demo">
-                    <a href="mailbox.html" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Send"><i class="fa fa-reply"></i> Gönder</a>
-                    <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Discard email"><i class="fa fa-times"></i> Vazgeç</a>
-                    <a href="mailbox.html" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to draft folder"><i class="fa fa-pencil"></i> Taslak</a>
-                </div>
                 <div class="clearfix"></div>
             </div>
-        </div>
+        </div> 
     </div>
-    </div>
+
 </body>
 
 </html>

@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
+using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -36,12 +37,28 @@ namespace MvcCoreCamp.Areas.Admin.Controllers
             var usermail = c.Users.Where(x => x.UserName == username).Select(y => y.Email).FirstOrDefault();
             var authorID = c.Authors.Where(x => x.Mail == usermail).Select(y => y.AuthorID).FirstOrDefault();
             var values = mm.GetSendboxByAuthor(authorID);
+
             return View(values);
         }
-
+        [HttpGet]
         public IActionResult ComposeMessage()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult ComposeMessage(Message2 p)
+        {
+            var username = User.Identity.Name;
+            var usermail = c.Users.Where(x => x.UserName == username).Select(y => y.Email).FirstOrDefault();
+            var authorID = c.Authors.Where(x => x.Mail == usermail).Select(y => y.AuthorID).FirstOrDefault();
+            p.SenderID = authorID;
+            p.ReceiverID = 4;
+            p.Date = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+            p.Status = true;
+            mm.TInsert(p);
+            return RedirectToAction("SendBox");
+
         }
     }
 }

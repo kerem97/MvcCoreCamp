@@ -13,6 +13,7 @@ using X.PagedList;
 namespace MvcCoreCamp.Areas.Admin.Controllers
 {
     [Area("Admin")]
+
     public class CategoryController : Controller
     {
         CategoryManager cm = new CategoryManager(new EfCategoryDal());

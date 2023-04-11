@@ -1,0 +1,22 @@
+﻿@using MvcCoreCamp.Models
+@model RoleViewModel
+
+@{
+    ViewData["Title"] = "AddRole";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Yeni Rol Ekleme Sayfası</h2>
+<br />
+<form method="post">
+    <div class="form-group">
+
+
+        <label>Rol Adı</label>
+        <input type="text" name="name" class="form-control" />
+        @*<div asp-validation-summary="ModelOnly">
+
+            </div>*@
+    </div>
+    <button class="btn btn-outline-dark">Ekle</button>
+</form>

@@ -38,6 +38,11 @@ namespace BusinessLayer.Concrete
             return _commentDal.GetListAll();
         }
 
+        public List<Comment> TGetListWithBlog()
+        {
+            return _commentDal.GetListWithBlog();
+        }
+
         public void TInsert(Comment t)
         {
             _commentDal.Insert(t);
