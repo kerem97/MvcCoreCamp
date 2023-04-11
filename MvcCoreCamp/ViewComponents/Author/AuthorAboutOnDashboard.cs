@@ -15,8 +15,8 @@ namespace MvcCoreCamp.ViewComponents.Author
         Context c = new Context();
         public IViewComponentResult Invoke()
         {
-            var usermail = User.Identity.Name;
-           
+            var username = User.Identity.Name;
+            var usermail = c.Users.Where(x => x.UserName == username).Select(y => y.Email).FirstOrDefault();
             var authorID = c.Authors.Where(x => x.Mail == usermail).Select(y => y.AuthorID).FirstOrDefault();
             var values = atm.GetAuthorById(authorID);
             return View(values);

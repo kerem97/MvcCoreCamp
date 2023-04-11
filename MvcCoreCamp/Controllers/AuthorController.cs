@@ -6,6 +6,7 @@ using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MvcCoreCamp.Models;
 using System;
@@ -22,6 +23,14 @@ namespace MvcCoreCamp.Controllers
         Context c = new Context();
 
         AuthorManager atm = new AuthorManager(new EfAuthorDal());
+
+        private readonly UserManager<AppUser> _userManager;
+
+        public AuthorController(UserManager<AppUser> userManager)
+        {
+            _userManager = userManager;
+        }
+
         public IActionResult Index()
         {
             var usermail = User.Identity.Name;
@@ -42,32 +51,39 @@ namespace MvcCoreCamp.Controllers
         }
 
         [HttpGet]
-        public IActionResult UpdateAuthorProfile()
+        public async Task<IActionResult> UpdateAuthorProfile()
         {
-            var usermail = User.Identity.Name;
-            var authorID = c.Authors.Where(x => x.Mail == usermail).Select(y => y.AuthorID).FirstOrDefault();
-            var values = atm.TGetByID(authorID);
-            return View(values);
+
+            var values = await _userManager.FindByNameAsync(User.Identity.Name);
+            UserUpdateViewModel model = new UserUpdateViewModel();
+            model.mail = values.Email;
+            model.namesurname = values.NameSurname;
+            model.imageurl = values.ImageUrl;
+            model.username = values.UserName;
+            return View(model);
+
         }
         [HttpPost]
-        public IActionResult UpdateAuthorProfile(Author p)
+        public async Task<IActionResult> UpdateAuthorProfile(UserUpdateViewModel upvm)
         {
-            AuthorValidator av = new AuthorValidator();
-            ValidationResult results = av.Validate(p);
-            if (results.IsValid)
+            var values = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            values.NameSurname = upvm.namesurname;
+            values.ImageUrl = upvm.imageurl;
+            values.Email = upvm.mail;
+            values.PasswordHash = _userManager.PasswordHasher.HashPassword(values, upvm.password);
+
+            var result = await _userManager.UpdateAsync(values);
+            if (result.Succeeded)
             {
-                p.AuthorStatus = true;
-                atm.TUpdate(p);
-                return RedirectToAction("Index", "Dashboard");
+                return RedirectToAction("Index", "Login");
             }
             else
             {
-                foreach (var x in results.Errors)
-                {
-                    ModelState.AddModelError(x.PropertyName, x.ErrorMessage);
-                }
+                return RedirectToAction("Index", "UpdateAuthorProfile");
             }
-            return View();
+
+
         }
 
         [HttpGet]
@@ -97,6 +113,11 @@ namespace MvcCoreCamp.Controllers
             a.AuthorAbout = p.AuthorAbout;
             atm.TInsert(a);
             return RedirectToAction("Index", "Dashboard");
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            return View();
         }
     }
 }

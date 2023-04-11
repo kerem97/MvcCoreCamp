@@ -44,44 +44,15 @@ namespace MvcCoreCamp.Controllers
                 return View();
             }
         }
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Login");
+        }
 
 
 
-
-        //[HttpPost]
-        //public async Task<IActionResult> Index(Author p)
-        //{
-        //    Context c = new Context();
-        //    var datavalue = c.Authors.FirstOrDefault(x => x.Mail == p.Mail && x.Password == p.Password);
-        //    if (datavalue != null)
-        //    {
-        //        var claims = new List<Claim>
-        //       {
-        //           new Claim(ClaimTypes.Name,p.Mail)
-        //    };
-        //        var useridentity = new ClaimsIdentity(claims, "a");
-        //        ClaimsPrincipal principal = new ClaimsPrincipal(useridentity);
-        //        await HttpContext.SignInAsync(principal);
-        //        return RedirectToAction("Index", "Dashboard");
-        //    }
-        //    else
-        //    {
-        //        return View();
-        //    }
-
-        //}
 
     }
 }
 
-//Context c = new Context();
-//var datavalue = c.Authors.FirstOrDefault(x => x.Mail == p.Mail && x.Password == p.Password);
-//if (datavalue != null)
-//{
-//    HttpContext.Session.SetString("username", p.Mail);
-//    return RedirectToAction("Index", "Author");
-//}
-//else
-//{
-//    return View();
-//}

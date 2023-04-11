@@ -18,7 +18,7 @@ namespace MvcCoreCamp.Controllers
 
     public class BlogController : Controller
     {
-        BlogManager bm = new BlogManager(new EfBlogDal());      
+        BlogManager bm = new BlogManager(new EfBlogDal());
         Context c = new Context();
         [AllowAnonymous]
         public IActionResult Index()
@@ -36,9 +36,12 @@ namespace MvcCoreCamp.Controllers
 
         public IActionResult BlogListByAuthor()
         {
-           
-            var usermail = User.Identity.Name;
-            var authorID = c.Authors.Where(x => x.Mail == usermail).Select(y => y.AuthorID).FirstOrDefault();            
+
+            var username = User.Identity.Name;
+            var usermail = c.Users.Where(x => x.UserName == username).Select(y => y.Email).FirstOrDefault();
+            var authorID = c.Authors.Where(x => x.Mail == usermail).Select(y => y.AuthorID).FirstOrDefault();
+            ViewBag.v = authorID;
+            //var authorID = c.Authors.Where(x => x.Mail == usermail).Select(y => y.AuthorID).FirstOrDefault();            
             var values = bm.TGetListCategoryByAuthor(authorID);
             return View(values);
         }
@@ -61,8 +64,9 @@ namespace MvcCoreCamp.Controllers
         [HttpPost]
         public IActionResult AddBlog(Blog p)
         {
-           
-            var usermail = User.Identity.Name;
+
+            var username = User.Identity.Name;
+            var usermail = c.Users.Where(x => x.UserName == username).Select(y => y.Email).FirstOrDefault();
             var authorID = c.Authors.Where(x => x.Mail == usermail).Select(y => y.AuthorID).FirstOrDefault();
             BlogValidator bv = new BlogValidator();
             ValidationResult results = bv.Validate(p);
@@ -116,7 +120,8 @@ namespace MvcCoreCamp.Controllers
         [HttpPost]
         public IActionResult UpdateBlog(Blog p)
         {
-            var usermail = User.Identity.Name;
+            var username = User.Identity.Name;
+            var usermail = c.Users.Where(x => x.UserName == username).Select(y => y.Email).FirstOrDefault();
             var authorID = c.Authors.Where(x => x.Mail == usermail).Select(y => y.AuthorID).FirstOrDefault();
             p.AuthorID = authorID;
             p.Status = true;

@@ -23,6 +23,11 @@ namespace BusinessLayer.Concrete
             return _message2Dal.GetMessageListWithByAuthor(id);
         }
 
+        public List<Message2> GetSendboxByAuthor(int id)
+        {
+            return _message2Dal.GetSendboxByAuthor(id);
+        }
+
         public void TDelete(Message2 t)
         {
             throw new NotImplementedException();
@@ -40,12 +45,12 @@ namespace BusinessLayer.Concrete
 
         public void TInsert(Message2 t)
         {
-            throw new NotImplementedException();
+            _message2Dal.Insert(t);
         }
 
         public void TUpdate(Message2 t)
         {
-            throw new NotImplementedException();
+            _message2Dal.Update(t);
         }
     }
 }

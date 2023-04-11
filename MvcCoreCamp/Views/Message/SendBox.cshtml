@@ -1,18 +1,17 @@
-﻿
-@using EntityLayer.Concrete
+﻿@using EntityLayer.Concrete
 @model List<Message2>
 @{
-    ViewData["Title"] = "Inbox";
+    ViewData["Title"] = "SendBox";
     Layout = "~/Views/Shared/_AuthorLayout.cshtml";
 }
 
-<h1>Gelen Kutusu</h1>
+<h1>Giden Kutusu</h1>
 <table class="table table-active">
     <tr>
         <td>#</td>
         <td>Konu</td>
         <td>Tarih</td>
-        <td>Gönderen </td>
+        <td>Alıcı </td>
         <td>Mesajı aç</td>
     </tr>
     @foreach (var x in Model)
@@ -21,7 +20,7 @@
             <td>@x.MessageID</td>
             <td>@x.Subject</td>
             <td>@(((DateTime)x.Date).ToString("dd-MMM-yyyy"))</td>
-            <td>@x.SenderUser.AuthorName</td>
+            <td>@x.ReceiverUser.AuthorName</td>
             <td><a href="/Message/MessageDetails/@x.MessageID" class="btn btn-outline-dark">Detaylar</a></td>
         </tr>
     }
